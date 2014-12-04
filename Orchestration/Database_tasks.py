@@ -60,7 +60,7 @@ def generate_db(database_name):
     db.commit()
     return db_name
 
-def refresh_db(database_name_B):
+def refresh_db(database_name_B,n):
     db_name = database_name_B
     db = sql.connect(db_name)
     db.row_factory = sql.Row #use to access column by name (otherwise, column must be accessed by index)
@@ -84,7 +84,7 @@ def refresh_db(database_name_B):
 
 
     #INSERT VALUES TO TABLE
-    n = 10 #number of nodes
+##    n = 10 #number of nodes
     for i in range(1,n+1):
         for j in range(i+1,n+1):
             start_node = i
@@ -103,9 +103,9 @@ def refresh_db(database_name_B):
     db.commit()
     return db_name
 
-def read_db(database_name_B):
+def read_db(database_name_B,n):
     """READ DATA AND RUN OPTIMIZE"""
-    n=10
+##    n=10
     c={}
     e={}
     l={}

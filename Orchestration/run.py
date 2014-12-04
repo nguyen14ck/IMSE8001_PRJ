@@ -85,9 +85,11 @@ class TaskB(pyutilib.workflow.Task):
         config.read('config\config.ini')
         k = config['Orchestration']['iterations']
         k = int(k)
+        n = config['Orchestration']['dimension']
+        n = int(n)
 
         for i in range(1,k+1):
-            n,c,e,l = read_db(refresh_db(self.database_name))
+            n,c,e,l = read_db(refresh_db(self.database_name,n),n)
             model_1 = mtztw(n,c,e,l)
             model_2 = mtz2tw(n,c,e,l)
             model_3 = tsptw2(n,c,e,l)
