@@ -16,6 +16,8 @@ import timeit #record running time
 from Optimization_model import *
 from Database_tasks import *
 
+import os
+
 
 # @:class#######################################################################
 class TaskA(pyutilib.workflow.Task):
@@ -32,7 +34,7 @@ class TaskA(pyutilib.workflow.Task):
 
         #READ CONFIGURATION FILE
         config = configparser.ConfigParser()
-        config.read('config\config.ini')
+        config.read(['config\config.ini', 'config\local.ini'])
         program = config['Orchestration']['R']
         argument = config['Orchestration']['Script']
 
@@ -51,8 +53,10 @@ class TaskD(pyutilib.workflow.Task):
 
     def execute(self):
         if (self.B_completed == True):
+#            host_name = platform.uname()[1]
             config = configparser.ConfigParser()
-            config.read('config\config.ini')
+
+            config.read(['config\config.ini', 'config\local.ini'])
 
             program = config['Orchestration']['R']
             argument = config['Orchestration']['Script']
@@ -82,7 +86,7 @@ class TaskB(pyutilib.workflow.Task):
 
     def execute(self):
         config = configparser.ConfigParser()
-        config.read('config\config.ini')
+        config.read(['config\config.ini', 'config\local.ini'])
         k = config['Orchestration']['iterations']
         k = int(k)
         n = config['Orchestration']['dimension']
@@ -176,7 +180,7 @@ def main():
 
 
     config = configparser.ConfigParser()
-    config.read('config\config.ini')
+    config.read(['config\config.ini', 'config\local.ini'])
     data_file = config['Orchestration']['database']
     print(w(file_name=data_file))
 
