@@ -1,0 +1,10 @@
+#R file
+*.Rhistory
+*.RData
+
+
+#Python file
+*.pyc
+
+#Local configuration file
+config/local.ini
