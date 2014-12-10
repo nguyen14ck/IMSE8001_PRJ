@@ -1,5 +1,5 @@
 
-import configparser #parse configruation file
+import ConfigParser #parse configruation file
 import platform
 
 import sqlite3 as sql #work with SQLite database
@@ -33,10 +33,10 @@ class TaskA(pyutilib.workflow.Task):
         self.database_name = generate_db(self.file_name)
 
         #READ CONFIGURATION FILE
-        config = configparser.ConfigParser()
+        config = ConfigParser.ConfigParser()
         config.read(['config\config.ini', 'config\local.ini'])
-        program = config['Orchestration']['R']
-        argument = config['Orchestration']['Script']
+##        program = config['Orchestration']['R']
+##        argument = config['Orchestration']['Script']
 
 
 
@@ -54,12 +54,12 @@ class TaskD(pyutilib.workflow.Task):
     def execute(self):
         if (self.B_completed == True):
 #            host_name = platform.uname()[1]
-            config = configparser.ConfigParser()
+            config = ConfigParser.ConfigParser()
 
             config.read(['config\config.ini', 'config\local.ini'])
 
-            program = config['Orchestration']['R']
-            argument = config['Orchestration']['Script']
+            program = config.get('Orchestration','R')
+            argument = config.get('Orchestration','Script')
 
             subprocess.call([program, argument])
             print "\n***********************************"
@@ -85,11 +85,11 @@ class TaskB(pyutilib.workflow.Task):
         self.outputs.declare('B_completed')
 
     def execute(self):
-        config = configparser.ConfigParser()
+        config = ConfigParser.ConfigParser()
         config.read(['config\config.ini', 'config\local.ini'])
-        k = config['Orchestration']['iterations']
+        k = config.get('Orchestration','iterations')
         k = int(k)
-        n = config['Orchestration']['dimension']
+        n = config.get('Orchestration','iterations')
         n = int(n)
 
         for i in range(1,k+1):
@@ -179,10 +179,11 @@ def main():
     w.add(D)
 
 
-    config = configparser.ConfigParser()
+    config = ConfigParser.ConfigParser()
     config.read(['config\config.ini', 'config\local.ini'])
-    data_file = config['Orchestration']['database']
+    data_file = config.get('Orchestration','database')
     print(w(file_name=data_file))
+
 
 if __name__ == '__main__':
     main()
